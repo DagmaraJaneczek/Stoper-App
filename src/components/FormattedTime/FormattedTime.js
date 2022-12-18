@@ -1,13 +1,33 @@
-const FormattedTime = (props) => {
 
-    return (
-      <div >
-        <span>{(props.time.h >=10)? props.time.h : "0"+ props.time.h}</span>&nbsp;:&nbsp;
-        <span>{(props.time.m >=10)? props.time.m : "0"+ props.time.m}</span>&nbsp;:&nbsp;
-        <span>{(props.time.s >=10)? props.time.s : "0"+ props.time.s}</span>&nbsp;:&nbsp;
-        <span>{(props.time.ms >=10)? props.time.ms : "0"+ props.time.ms}</span>&nbsp;:&nbsp;
-      </div>
-    );
+
+const FormattedTime = ({ time }) => {
+
+  let miliseconds, seconds, minutes, hours;
+  const getTime = (duration) => {
+    miliseconds = Math.floor((duration % 1000) / 10);
+    seconds = Math.floor((duration / 1000) % 60);
+    minutes = Math.floor((duration / 60000));
+    hours = Math.floor((duration / 360000));
+    if (miliseconds < 10) {
+      miliseconds = '0' + miliseconds;
+    }
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
   };
-  
-  export default FormattedTime;
+  getTime(time);
+
+  return(
+    <div>
+        <p>{hours}:{minutes}:{seconds}.{miliseconds}</p>
+    </div>
+  );
+};
+
+export default FormattedTime;

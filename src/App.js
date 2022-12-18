@@ -1,42 +1,40 @@
 import FormattedTime from "./components/FormattedTime/FormattedTime";
 import Button from "./components/Button/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const App = () => {
 
-  const [time, setTime] = useState({ms:0, s:0, m:0, h:0});
+  const [time, setTime] = useState(0);
+  const [timer, setTimer] = useState('');
 
-  const start = () =>{
-    run();
-    setInterval(run, 10);
+  const start = () => {
+    setTimer(setInterval(() => {
+      setTime(prevValue => prevValue + 1)}, 1));
   };
 
-  let updatedMs = time.ms, updatedS = time.s, updatedM = time.m, updatedH = time.h;
+  const stop = () =>{
+    clearInterval(timer);
+  };
 
-  const run = () => {
-    if(updatedM === 60) {
-      updatedH++;
-      updatedM = 0;
-    }
-    if(updatedS === 60){
-      updatedM++;
-      updatedS = 0;
-    }
-    if(updatedMs === 100) {
-      updatedS++;
-      updatedMs = 0;
-    }
-    updatedMs++;
-    return setTime({ms:updatedMs, s:updatedS, m:updatedM, h:updatedH});
+  const reset = () => {
+    setTime(0);
+  };
+
+useEffect(() => {
+  return() => {
+    if(timer) clearInterval(timer)
   }
+}, []);
 
   return (
     <div className="main-section">
       <div className="clock-holder">
         <div className="stopwatch">
           <FormattedTime time={time} />
-          <Button start={start} />
+          <Button action={start}>Start</Button>
+          <Button action={stop}>Stop</Button>
+          <Button action={reset}>Reset</Button>
         </div>
       </div>
     </div>
