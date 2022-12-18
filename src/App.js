@@ -32,7 +32,7 @@ useEffect(() => {
       <div className="clock-holder">
         <div className="stopwatch">
           <FormattedTime time={time} />
-          <Button action={start}>Start</Button>
+          <Button className="start-btn" action={start}>Start</Button>
           <Button action={stop}>Stop</Button>
           <Button action={reset}>Reset</Button>
         </div>
